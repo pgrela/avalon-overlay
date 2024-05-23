@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {PlayerBox, PlayerDescriptor} from "./PlayerBox";
+import {Nomination, PlayerBox, PlayerDescriptor} from "./PlayerBox";
 import {useCurrentFrame, useVideoConfig} from "remotion";
 import {AppearanceFromTo} from "./commonConfigTypes";
 import {appearAndDisappear} from "./commons";
@@ -38,7 +38,7 @@ export const PlayersBar: React.FC<{ playersBar: PlayersBarDescriptor }> = ({play
         };
     }, [top]);
     const cupPerPlayer: { [key: string]: AppearanceFromTo[] } = {};
-    const nominationsPerPlayer: { [key: string]: AppearanceFromTo[] } = {};
+    const nominationsPerPlayer: { [key: string]: Nomination[] } = {};
     playersBar.players.forEach((player) => {
         cupPerPlayer[player.name] = []
         nominationsPerPlayer[player.name] = []
@@ -50,16 +50,21 @@ export const PlayersBar: React.FC<{ playersBar: PlayersBarDescriptor }> = ({play
         })
     }
     for (let i = 0; i < playersBar.nominations.length; i++) {
-        for (let j = 0; j < playersBar.nominations[i].players.length; j++) {
-            nominationsPerPlayer[playersBar.nominations[i].players[j]].push({
-                appearAt: playersBar.nominations[i].startAt+1./10*j,
+        playersBar.players.forEach((player, j: number) => {
+            nominationsPerPlayer[player.name].push({
+                appearAt: playersBar.nominations[i].startAt + 1. / 20 * j,
                 disappearAt: playersBar.nominations[i].endAt,
+                nominated: playersBar.nominations[i].players.includes(player.name)
             })
-        }
+        })
     }
     const playerBoxes: React.JSX.Element[] = [];
     for (let i = 0; i < playersBar.players.length; i++) {
-        playerBoxes.push(<PlayerBox key={`playerBox${i}`} player={playersBar.players[i]} cup={cupPerPlayer[playersBar.players[i].name]} nominations={nominationsPerPlayer[playersBar.players[i].name]}/>);
+        playerBoxes.push(<PlayerBox
+            key={`playerBox${i}`}
+            player={playersBar.players[i]}
+            cup={cupPerPlayer[playersBar.players[i].name]}
+            nominations={nominationsPerPlayer[playersBar.players[i].name]}/>);
     }
     return (
         <div style={container}>

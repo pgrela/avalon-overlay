@@ -7,10 +7,11 @@ import {appearAndDisappear} from "./commons";
 export type PlayerDescriptor = {
     name: string
 }
+export type Nomination = AppearanceFromTo & { nominated: boolean };
 export type PlayerBoxComponentProperties = {
     player: PlayerDescriptor,
     cup: AppearanceFromTo[],
-    nominations: AppearanceFromTo[],
+    nominations: Nomination[],
 }
 const {fontFamily} = loadFont();
 export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, nominations}) => {
@@ -20,19 +21,19 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
 
     let top = 0;
     let color = "#ddd"
-    const bounceDuration = fps / 2;
+    const bounceDuration = fps / 4;
     for (let i = 0; i < nominations.length; i++) {
         top += interpolate(frame, [nominations[i].appearAt * fps, nominations[i].appearAt * fps + bounceDuration], [0, 1], {
-            easing: Easing.bounce,
+            easing: Easing.sin,
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
         });
         top -= interpolate(frame, [nominations[i].appearAt * fps + bounceDuration, nominations[i].appearAt * fps + bounceDuration * 2], [0, 1], {
-            easing: Easing.bounce,
+            easing: Easing.sin,
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
         });
-        if(nominations[i].appearAt<=frame/fps && frame/fps<=nominations[i].disappearAt){
+        if(nominations[i].nominated && nominations[i].appearAt<=frame/fps && frame/fps<=nominations[i].disappearAt){
             color = "#d09e3f"
         }
 

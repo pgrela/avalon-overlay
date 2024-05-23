@@ -21,7 +21,7 @@ export const VotingResultBox: React.FC<VotingResultsBarDescriptor> = ({results})
     let result = "_:_"
     for (let i = 0; i < results.length; i++) {
         right += appearAndDisappear(results[i], 330, fps, frame);
-        if(results[i].appearAt<=frame/fps && frame/fps<=results[i].disappearAt){
+        if(results[i].appearAt<=frame/fps && frame/fps<=results[i].disappearAt+1){
             result = `${results[i].approve}:${results[i].reject}`
         }
     }
