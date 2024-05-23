@@ -2,6 +2,10 @@ node_modules
 dist
 .DS_Store
 .env
+.github
+.vscode
+public/inputs
+.idea
 
 # Ignore the output video from Git but not videos you import into src/.
 out

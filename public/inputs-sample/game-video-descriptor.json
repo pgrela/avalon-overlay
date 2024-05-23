@@ -1,0 +1,132 @@
+{
+  "missionsBar": {
+    "missions": [
+      {
+        "time": 3,
+        "result": "good"
+      },
+      {
+        "time": 7,
+        "result": "evil"
+      },
+      {
+        "time": 11,
+        "result": "evil"
+      },
+      {
+        "time": 15,
+        "result": "good"
+      },
+      {
+        "time": 17,
+        "result": "evil"
+      }
+    ],
+    "appearances": [
+      {
+        "appearAt": 1,
+        "disappearAt": 4
+      },
+      {
+        "appearAt": 6,
+        "disappearAt": 19
+      }
+    ]
+  },
+  "playersBar": {
+    "players": [
+      {
+        "name": "Steven"
+      },
+      {
+        "name": "Jamie"
+      },
+      {
+        "name": "Jenny"
+      },
+      {
+        "name": "Anna"
+      },
+      {
+        "name": "Onufry"
+      },
+      {
+        "name": "Jerzy"
+      },
+      {
+        "name": "Clark"
+      },
+      {
+        "name": "Maurycy"
+      },
+      {
+        "name": "Aleksiej"
+      },
+      {
+        "name": "Giorgio"
+      }
+    ],
+    "cup": [
+      {
+        "player": "Jenny",
+        "startAt": 3,
+        "endAt": 10
+      },
+      {
+        "player": "Clark",
+        "startAt": 12,
+        "endAt": 16
+      }
+    ],
+    "appearances": [
+      {
+        "appearAt": 2,
+        "disappearAt": 7
+      },
+      {
+        "appearAt": 9,
+        "disappearAt": 19
+      }
+    ],
+    "nominations": [
+      {
+        "startAt": 2,
+        "endAt": 7,
+        "players": [
+          "Steven",
+          "Anna",
+          "Onufry",
+          "Jerzy",
+          "Giorgio"
+        ]
+      },
+      {
+        "startAt": 11,
+        "endAt": 16,
+        "players": [
+          "Steven",
+          "Anna",
+          "Onufry",
+          "Jerzy",
+          "Giorgio"
+        ]
+      }
+    ]
+  },
+  "votingResultsBar": {
+    "results": [
+      {
+        "appearAt": 6,
+        "disappearAt": 9,
+        "approve": 4,
+        "reject": 6
+      },
+      {
+        "appearAt": 13,
+        "disappearAt": 18,
+        "approve": 7,
+        "reject": 3
+      }
+    ]
+  }
+}
