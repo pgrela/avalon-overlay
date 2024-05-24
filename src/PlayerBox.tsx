@@ -8,13 +8,15 @@ export type PlayerDescriptor = {
     name: string
 }
 export type Nomination = AppearanceFromTo & { nominated: boolean };
+export type Admittance = AppearanceFromTo & { admitted: boolean };
 export type PlayerBoxComponentProperties = {
     player: PlayerDescriptor,
     cup: AppearanceFromTo[],
     nominations: Nomination[],
+    admittances: Admittance[],
 }
 const {fontFamily} = loadFont();
-export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, nominations}) => {
+export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, nominations, admittances}) => {
 
     const frame = useCurrentFrame()
     const {fps} = useVideoConfig();
@@ -22,22 +24,47 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
     let top = 0;
     let color = "#ddd"
     const bounceDuration = fps / 4;
+
+    function bounce(appearance: AppearanceFromTo) {
+        return interpolate(frame, [appearance.appearAt * fps, appearance.appearAt * fps + bounceDuration], [0, 1], {
+            easing: Easing.sin,
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+        }) - interpolate(frame, [appearance.appearAt * fps + bounceDuration, appearance.appearAt * fps + bounceDuration * 2], [0, 1], {
+            easing: Easing.sin,
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+        });
+    }
+
     for (let i = 0; i < nominations.length; i++) {
-        top += interpolate(frame, [nominations[i].appearAt * fps, nominations[i].appearAt * fps + bounceDuration], [0, 1], {
-            easing: Easing.sin,
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-        });
-        top -= interpolate(frame, [nominations[i].appearAt * fps + bounceDuration, nominations[i].appearAt * fps + bounceDuration * 2], [0, 1], {
-            easing: Easing.sin,
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-        });
-        if(nominations[i].nominated && nominations[i].appearAt<=frame/fps && frame/fps<=nominations[i].disappearAt){
+        top += bounce(nominations[i]);
+        if (nominations[i].nominated && nominations[i].appearAt <= frame / fps && frame / fps <= nominations[i].disappearAt) {
             color = "#d09e3f"
         }
-
     }
+    for (let i = 0; i < admittances.length; i++) {
+        top += bounce(admittances[i]);
+    }
+
+    const admitStyle: React.CSSProperties = useMemo(() => {
+        return {
+            height: "1em",
+            objectFit: "contain",
+            display: "block",
+            paddingRight: 7,
+        };
+    }, []);
+    let admittedImage: React.JSX.Element = <Img style={{...admitStyle, opacity:0}} src={staticFile("avalon-approve.png")}/>;
+    for (let i = 0; i < admittances.length; i++) {
+        if (admittances[i].appearAt <= frame / fps && frame / fps <= admittances[i].disappearAt) {
+            if (admittances[i].admitted)
+                admittedImage = <Img style={admitStyle} src={staticFile("avalon-approve.png")}/>
+            else
+                admittedImage = <Img style={admitStyle} src={staticFile("avalon-reject.png")}/>
+        }
+    }
+
     const container: React.CSSProperties = useMemo(() => {
         return {
             padding: 2,
@@ -53,9 +80,9 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
             paddingLeft: 7,
             justifyContent: "space-between",
             alignItems: "center",
-            transform: `translateY(${top*20}px)`
+            transform: `translateY(${top * 20}px)`
         };
-    }, [top,color]);
+    }, [top, color]);
 
 
     let scaleCup = 0;
@@ -85,6 +112,7 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
 
     return (
         <div style={container}>
+            {admittedImage}
             <div>{player.name}</div>
             <Img style={cupStyle} src={staticFile("avalon-cup.png")}/>
         </div>

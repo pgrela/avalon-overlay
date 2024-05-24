@@ -3,11 +3,13 @@ import React from "react";
 import {MissionsBarDescriptor, MissionsProgress} from "./MissionsProgress";
 import {PlayersBar, PlayersBarDescriptor} from "./PlayersBar";
 import {VotingResultBox, VotingResultsBarDescriptor} from "./VotingResultBox";
+import {MissionResultBar, MissionResultsBarDescriptor} from "./MissionResultBar";
 
 export type AvalonGameDescriptor = {
     missionsBar: MissionsBarDescriptor,
     playersBar: PlayersBarDescriptor,
     votingResultsBar: VotingResultsBarDescriptor,
+    missionResultsBar: MissionResultsBarDescriptor,
 }
 
 
@@ -18,7 +20,7 @@ export const Overlay: React.FC<{
     return (
         <>
             <AbsoluteFill>
-                <Video startFrom={20000} src={staticFile("inputs/video.mp4")}/>
+                <Video startFrom={120*60} src={staticFile("inputs/video.mp4")}/>
             </AbsoluteFill>
             <AbsoluteFill>
                 <MissionsProgress missionsBar={avalonGameDescriptor.missionsBar}/>
@@ -27,7 +29,10 @@ export const Overlay: React.FC<{
                 <PlayersBar playersBar={avalonGameDescriptor.playersBar}/>
             </AbsoluteFill>
             <AbsoluteFill>
-                <VotingResultBox results={avalonGameDescriptor.votingResultsBar.results}/>
+                <VotingResultBox votingResultsBar={avalonGameDescriptor.votingResultsBar}/>
+            </AbsoluteFill>
+            <AbsoluteFill>
+                <MissionResultBar missionResultsBar={avalonGameDescriptor.missionResultsBar}/>
             </AbsoluteFill>
         </>
     );

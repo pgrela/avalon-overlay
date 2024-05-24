@@ -25,7 +25,7 @@ export const MissionsProgress: React.FC<{ missionsBar: MissionsBarDescriptor }> 
 
     let left = 0;
     for (let i = 0; i < missionsBar.appearances.length; i++) {
-        left = +appearAndDisappear(missionsBar.appearances[i], 430, fps, frame);
+        left = appearAndDisappear(missionsBar.appearances[i], 430, fps, frame);
     }
 
     const container: React.CSSProperties = useMemo(() => {

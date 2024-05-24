@@ -1,11 +1,11 @@
 import {Composition} from "remotion";
 import {Overlay} from "./Overlay";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import avalonGameDescriptor from "../public/inputs/game-video-descriptor.json"
+import {Converter} from "./descriptorConverter";
+import {game, video} from "../public/inputs-sample/the-actual-game";
 
+const gameDescriptor = new Converter(game, video).toComponentsDescriptor();
 const fps = 60;
-const seconds = 20;
+const seconds = 15*60+20;
 export const RemotionRoot: React.FC = () => {
     return (
         <>
@@ -16,7 +16,7 @@ export const RemotionRoot: React.FC = () => {
                 fps={fps}
                 width={1280}
                 height={720}
-                defaultProps={{avalonGameDescriptor}}
+                defaultProps={{avalonGameDescriptor: gameDescriptor}}
             />
         </>
     );
