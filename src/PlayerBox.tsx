@@ -40,7 +40,7 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
     for (let i = 0; i < nominations.length; i++) {
         top += bounce(nominations[i]);
         if (nominations[i].nominated && nominations[i].appearAt <= frame / fps && frame / fps <= nominations[i].disappearAt) {
-            color = "#d09e3f"
+            color = "#deb26f"
         }
     }
     for (let i = 0; i < admittances.length; i++) {
@@ -49,19 +49,19 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
 
     const admitStyle: React.CSSProperties = useMemo(() => {
         return {
-            height: "1em",
+            height: ".8em",
             objectFit: "contain",
             display: "block",
-            paddingRight: 7,
+            paddingRight: 1,
         };
     }, []);
     let admittedImage: React.JSX.Element = <Img style={{...admitStyle, opacity:0}} src={staticFile("avalon-approve.png")}/>;
     for (let i = 0; i < admittances.length; i++) {
         if (admittances[i].appearAt <= frame / fps && frame / fps <= admittances[i].disappearAt) {
             if (admittances[i].admitted)
-                admittedImage = <Img style={admitStyle} src={staticFile("avalon-approve.png")}/>
+                admittedImage = <Img style={admitStyle} src={staticFile("avalon-approve-icon.png")}/>
             else
-                admittedImage = <Img style={admitStyle} src={staticFile("avalon-reject.png")}/>
+                admittedImage = <Img style={admitStyle} src={staticFile("avalon-reject-icon.png")}/>
         }
     }
 
@@ -104,8 +104,8 @@ export const PlayerBox: React.FC<PlayerBoxComponentProperties> = ({player, cup, 
             height: "1em",
             objectFit: "contain",
             display: "block",
-            paddingRight: 7,
-            scale: String(scaleCup),
+            paddingRight: 1,
+            scale: String(scaleCup*.8),
         };
     }, [scaleCup]);
 

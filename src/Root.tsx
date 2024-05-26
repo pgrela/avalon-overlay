@@ -1,7 +1,7 @@
 import {Composition} from "remotion";
 import {Overlay} from "./Overlay";
 import {Converter} from "./descriptorConverter";
-import {game, video} from "../public/inputs-sample/the-actual-game";
+import {game, video} from "../public/inputs/the-actual-game";
 
 const gameDescriptor = new Converter(game, video).toComponentsDescriptor();
 const fps = 60;

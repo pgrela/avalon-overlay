@@ -1,4 +1,4 @@
-import {AbsoluteFill, staticFile, Video,} from "remotion";
+import {AbsoluteFill, OffthreadVideo, Sequence, staticFile} from "remotion";
 import React from "react";
 import {MissionsBarDescriptor, MissionsProgress} from "./MissionsProgress";
 import {PlayersBar, PlayersBarDescriptor} from "./PlayersBar";
@@ -16,11 +16,12 @@ export type AvalonGameDescriptor = {
 export const Overlay: React.FC<{
     avalonGameDescriptor: AvalonGameDescriptor
 }> = ({avalonGameDescriptor}) => {
-
     return (
         <>
             <AbsoluteFill>
-                <Video startFrom={120*60} src={staticFile("inputs/video.mp4")}/>
+                <Sequence premountFor={200}>
+                    <OffthreadVideo pauseWhenBuffering startFrom={120 * 60} src={staticFile("inputs/video.mp4")}/>
+                </Sequence>
             </AbsoluteFill>
             <AbsoluteFill>
                 <MissionsProgress missionsBar={avalonGameDescriptor.missionsBar}/>
